@@ -1,0 +1,170 @@
+# Blender MTL File: 'None'
+# Material Count: 12
+
+newmtl 24_+skirt.0000-2b-prototype-2b_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.414709 0.479111 0.560477
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_suit_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_suit_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+
+newmtl 24_+skirt.0001-2b-prototype-2b-suit-s_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.404541 0.703875 0.775672
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_suit_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_suit_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+
+newmtl 24_0002-2b-prototype-2b-suit-hairband_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.635055 0.572622 0.403081
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_head_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_suit_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+
+newmtl 24_0003-2b-prototype-2b-suit-blindfold_0.25_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.776079 0.556282 0.451922
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_suit_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_suit_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+
+newmtl 24_0004-2b-prototype-reference_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.523025 0.420839 0.560020
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_suit_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_suit_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_suit_dif.png
+
+newmtl 24_0005-2b-prototype-2b-teeth1_0.1_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.456765 0.707416 0.442230
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_head_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_head_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+
+newmtl 24_0006-2b-prototype-2b-head_0.1_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.764291 0.711824 0.547428
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_head_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_head_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+
+newmtl 24_0007-2b-prototype-reference_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.516039 0.791922 0.437021
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_head_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_head_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_head_dif.png
+
+newmtl 24_0010-2b-prototype-2b-hair1_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.662163 0.512369 0.789596
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_hair1_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_hair1_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
+
+newmtl 25_0008-2b-prototype-2b-hair3_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.612271 0.539201 0.664547
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_hair2_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_hair2_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_hair2_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_hair2_dif.png
+
+newmtl 25_0009-2b-prototype-2b-hair2_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.471074 0.640897 0.652814
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_hair1_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_hair1_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
+
+newmtl 25_0011-2b-prototype-reference_0.05_16_16
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.749856 0.754381 0.796036
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.000000
+illum 1
+map_Kd /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
+map_Bump /home/janders/Descargas/yorha 2b/2b/2b_hair1_nrm.png
+map_Ks /home/janders/Descargas/yorha 2b/2b/2b_hair1_spc.png
+map_d /home/janders/Descargas/yorha 2b/2b/2b_hair1_dif.png
