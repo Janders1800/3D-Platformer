@@ -2,7 +2,7 @@ extends Spatial
 
 
 const INTERPOLATION = 0.1
-const MINDISTANCE = 1.6
+const MINDISTANCE = 1
 
 var originalCamZoom = null
 var originalCamVect = null
@@ -18,6 +18,7 @@ func _ready():
 	get_node("CameraPivot/RayCast").add_exception(get_node(".."))
 
 
+#warning-ignore:unused_argument
 func _process(delta):
 	var dist = camera.translation.length()
 	var distTarget = originalCamZoom
