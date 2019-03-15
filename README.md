@@ -3,7 +3,10 @@ A basic 3D platformer made in Godot
 
 ## Controls
 Move the character:
-* WASD or Right Joystick
+* WASD or Left Joystick
+
+Move the camera:
+* Mouse or Right Joystick
 
 Jump:
 * Space or A Button (xBox)
