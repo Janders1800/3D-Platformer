@@ -21,9 +21,7 @@ var isMovingCamera = false
 var recalculateAngle = false
 var jump = false
 var is_hanging = false
-var canMove = true
 var letGo = false
-var goalReached = true
 
 var moveAmount = 0.0
 var angleOffset = 0.0
@@ -102,11 +100,10 @@ func _process(delta):
 	#Quits the game
 	if Input.is_action_just_pressed("ui_cancel"): get_tree().quit()
 	
-	if canMove:
-		#Takes the inputs of the keyboard/gamepad
-		if Input.is_action_just_pressed("ui_accept"): jump = true
-		if Input.is_action_just_pressed("ui_select") and is_hanging: letGo = true
-		motionTarget = Vector2 (Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right"), Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+	#Takes the inputs of the keyboard/gamepad
+	if Input.is_action_just_pressed("ui_accept"): jump = true
+	if Input.is_action_just_pressed("ui_select") and is_hanging: letGo = true
+	motionTarget = Vector2 (Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right"), Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
 	
 	#Takes the inputs of the joystick for the camera
 	cameraTarget = Vector2 (Input.get_action_strength("camera_left") - Input.get_action_strength("camera_right"), Input.get_action_strength("camera_down") - Input.get_action_strength("camera_up"))
@@ -175,20 +172,21 @@ func _physics_process(delta):
 			orientation = orientation.orthonormalized() # orthonormalize orientation
 			characterMesh.global_transform.basis = orientation.basis
 		
-		if cameraFollowsRotation:
+		if get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and cameraFollowsRotation:
 			#Rotates the camera with the floor
-			if (get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and isMovingCamera) or (get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and recalculateAngle) or (get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and motionTarget.length() > 0.01 and prevFloor != get_slide_collision(0).collider):
+			if isMovingCamera or recalculateAngle or (motionTarget.length() > 0.01 and prevFloor != get_slide_collision(0).collider):
 				camAngleOffset = cameraBase.transform.basis.get_euler().y - get_slide_collision(0).collider.global_transform.basis.get_euler().y
 				prevFloor = get_slide_collision(0).collider
-			elif is_on_floor() and get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody:
+			elif is_on_floor():
 				cameraBase.transform.basis = Basis(Vector3.UP, get_slide_collision(0).collider.global_transform.basis.get_euler().y + camAngleOffset)
 		
 		#Rotates the character with the floor
-		if (get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and motionTarget.length() > 0.01) or (get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and recalculateAngle):
-			recalculateAngle = false
-			angleOffset = characterMesh.transform.basis.get_euler().y - get_slide_collision(0).collider.global_transform.basis.get_euler().y
-		elif is_on_floor() and get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody:
-			characterMesh.transform.basis = Basis(Vector3.UP, get_slide_collision(0).collider.global_transform.basis.get_euler().y + angleOffset)
+		if get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody:
+			if motionTarget.length() > 0.01 or recalculateAngle:
+				recalculateAngle = false
+				angleOffset = characterMesh.transform.basis.get_euler().y - get_slide_collision(0).collider.global_transform.basis.get_euler().y
+			elif is_on_floor():
+				characterMesh.transform.basis = Basis(Vector3.UP, get_slide_collision(0).collider.global_transform.basis.get_euler().y + angleOffset)
 		
 		#Detects if the character can grab
 		if rayMaxLeft.is_colliding() and rayMaxRight.is_colliding() and rayForward.is_colliding() and velocity.y < 0 and not is_on_floor():
@@ -196,8 +194,6 @@ func _physics_process(delta):
 			if rayDown.get_collision_normal().y > 0.5 and fallDiff.length() > 1:
 				letGoPosition = Vector3()
 				is_hanging = true
-				goalReached = false
-				canMove = false
 				
 				var parent = rayDown.get_collider()
 				var prevPosition = global_transform.origin
@@ -235,6 +231,7 @@ func _physics_process(delta):
 		targetRotation.y = 0
 		targetRotation = targetRotation.normalized()
 		
+		#Rotates the character to face the edge
 		var q_from = Quat(orientation.basis)
 		var q_to = Quat(Transform().looking_at(targetRotation, Vector3.UP).basis)
 		
@@ -246,15 +243,8 @@ func _physics_process(delta):
 		
 		animationTree.set("parameters/State/current", 1)
 		
-		#Waits until the character is correctly aligned with the platform
-		if not goalReached:
-			global_transform.origin = global_transform.origin.linear_interpolate(targetPosition, MOVEMENTINTERPOLATION * delta)
-			if (global_transform.origin - targetPosition).length() < 0.05:
-				goalReached = true
-				canMove = true
-		
-		#Recalculates the chacter position relative to the wall (needed for curved walls)
-		if moveAmount > 0.01 or (targetPosition - global_transform.origin).length() > 0.05:
+		#Recalculates the chacter position relative to the wall (needed for curved walls and moving platforms)
+		if moveAmount > 0.01 or (targetPosition - global_transform.origin).length() > 0.02:
 			global_transform.origin = global_transform.origin.linear_interpolate(targetPosition, MOVEMENTINTERPOLATION * delta)
 		else :
 			global_transform.origin.y = targetPosition.y
