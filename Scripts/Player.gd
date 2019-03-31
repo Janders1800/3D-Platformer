@@ -103,7 +103,6 @@ func _process(delta):
 	#Takes the inputs of the keyboard/gamepad
 	if Input.is_action_just_pressed("ui_accept"): jump = true
 	if Input.is_action_just_pressed("ui_select") and is_hanging: letGo = true
-	motionTarget = Vector2 (Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right"), Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
 	
 	#Takes the inputs of the joystick for the camera
 	cameraTarget = Vector2 (Input.get_action_strength("camera_left") - Input.get_action_strength("camera_right"), Input.get_action_strength("camera_down") - Input.get_action_strength("camera_up"))
@@ -111,7 +110,6 @@ func _process(delta):
 	if Input.get_action_strength("camera_left") > 0 or Input.get_action_strength("camera_right") > 0:
 		isMovingCamera = true
 	
-	moveAmount = motionTarget.length()
 	
 	#Rotates the camera based on the gamepad input
 	cameraBase.rotate_y(cameraTarget.x * rightJoySensivilityX)
@@ -125,6 +123,11 @@ func _process(delta):
 
 
 func _physics_process(delta):
+	#For some reason Godot drops inputs in _process() at low framerates so this code has to be here ¯\_(ツ)_/¯
+	motionTarget = Vector2 (Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right"),
+                            Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up"))
+	moveAmount = motionTarget.length()
+	
 	motion = motion.linear_interpolate(motionTarget * moveSpeed, MOVEMENTINTERPOLATION * delta)
 	
 	#Gets the floor velocity
@@ -163,14 +166,7 @@ func _physics_process(delta):
 		animationTree.set("parameters/State/current", 0)
 		if motionTarget.length() > 0.01:
 			#Rotates the charcter to the direction movement
-			var q_from = Quat(orientation.basis)
-			var q_to = Quat(Transform().looking_at(-direction,Vector3.UP).basis)
-			
-			#Interpolate current rotation with desired one
-			orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATIONINTERPOLATION))
-			
-			orientation = orientation.orthonormalized() # orthonormalize orientation
-			characterMesh.global_transform.basis = orientation.basis
+			rotateCharacter(-direction, delta)
 		
 		if get_slide_count() != 0 and get_slide_collision(0).collider is RigidBody and cameraFollowsRotation:
 			#Rotates the camera with the floor
@@ -201,6 +197,8 @@ func _physics_process(delta):
 				var prevCamRotation = cameraBase.global_transform.basis
 				
 				#Reparents the character to the platform (to handle movement/rotation)
+				#Note: Reparenting at low framerates works a little wonky and trows some errors, this is a bug that has already been reported
+				#      it is expected to be fixed by 3.2
 				if parent != null:
 					get_parent().remove_child(self)
 					parent.add_child(self)
@@ -218,7 +216,7 @@ func _physics_process(delta):
 		
 		motionTarget = Vector2()
 		
-		#Gets the movement of the platform
+		#Gets the movement of the platform, will be used wen jumping/leting go
 		if rayDown.is_colliding() and rayDown.get_collider() is RigidBody:
 			prevVelocity.x = rayDown.get_collider().linear_velocity.x
 			prevVelocity.z = rayDown.get_collider().linear_velocity.z
@@ -232,14 +230,7 @@ func _physics_process(delta):
 		targetRotation = targetRotation.normalized()
 		
 		#Rotates the character to face the edge
-		var q_from = Quat(orientation.basis)
-		var q_to = Quat(Transform().looking_at(targetRotation, Vector3.UP).basis)
-		
-		#Interpolate current rotation with desired one
-		orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATIONINTERPOLATION))
-		
-		orientation = orientation.orthonormalized() # orthonormalize orientation
-		characterMesh.global_transform.basis = orientation.basis
+		rotateCharacter(targetRotation, delta)
 		
 		animationTree.set("parameters/State/current", 1)
 		
@@ -329,3 +320,13 @@ func clear_parent():
 	if cameraFollowsRotation:
 		global_transform.basis = prevRotation
 		cameraBase.global_transform.basis = prevCamRotation
+
+func rotateCharacter(direction, delta):
+	var q_from = Quat(orientation.basis)
+	var q_to = Quat(Transform().looking_at(direction,Vector3.UP).basis)
+	
+	#Interpolate current rotation with desired one
+	orientation.basis = Basis(q_from.slerp(q_to, delta * ROTATIONINTERPOLATION))
+	
+	orientation = orientation.orthonormalized() # orthonormalize orientation
+	characterMesh.global_transform.basis = orientation.basis
