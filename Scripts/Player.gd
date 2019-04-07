@@ -22,6 +22,7 @@ var recalculateAngle = false
 var jump = false
 var is_hanging = false
 var letGo = false
+var canSlide = false
 
 var moveAmount = 0.0
 var angleOffset = 0.0
@@ -235,7 +236,7 @@ func _physics_process(delta):
 		animationTree.set("parameters/State/current", 1)
 		
 		#Recalculates the chacter position relative to the wall (needed for curved walls and moving platforms)
-		if moveAmount > 0.01 or (targetPosition - global_transform.origin).length() > 0.02:
+		if (targetPosition - global_transform.origin).length() > 0.02:
 			global_transform.origin = global_transform.origin.linear_interpolate(targetPosition, MOVEMENTINTERPOLATION * delta)
 		else :
 			global_transform.origin.y = targetPosition.y
@@ -272,6 +273,11 @@ func _physics_process(delta):
 			
 			velocity += edgeVelocity * moveAmount
 	
+	#Checks if the floor is flat to activate stop_on_slope. Needed for the platforms movement
+	if get_slide_count() != 0 and get_slide_collision(0).normal.dot(Vector3.UP) >= 0.99:
+		canSlide = true
+	elif get_slide_count() != 0 and get_slide_collision(0).normal.dot(Vector3.UP) < 0.99:
+		canSlide = false
 	
 	if is_on_floor() and jump:
 		#Adds the jump speed and the floor velocity to the character velocity
@@ -290,7 +296,7 @@ func _physics_process(delta):
 		if not is_on_floor() and not is_hanging:
 			velocity.x += prevVelocity.x
 			velocity.z += prevVelocity.z
-		velocity = move_and_slide_with_snap(velocity, Vector3.DOWN, Vector3.UP)
+		velocity = move_and_slide_with_snap(velocity, Vector3.DOWN, Vector3.UP, !canSlide)
 		velocity.y += -playerGravity * gravityMultiplier * delta
 	
 	if not is_on_floor() and not is_hanging: animationTree.set("parameters/State/current", 2)
